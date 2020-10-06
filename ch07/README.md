@@ -1,7 +1,7 @@
 ## 파일 설명
 | 파일명 | 파일 용도 | 관련 절 | 페이지 |
 |:--   |:--      |:--    |:--      |
-| apply_filter.py | lena_gray.png 파일에 필터를 적용합니다. |  |  |
+| apply_filter.py | cactus_gray.png 파일에 필터를 적용합니다. |  |  |
 | gradient_check.py | SimpleCovNet이 기울기를 올바로 계산하는지 확인합니다. |  |  |
 | params.pkl | 미리 학습된 가중치 값들입니다. |  |  |
 | simple_convnet.py | “Convolution-ReLU-Pooling-Affine-ReLU-Affine-Softmax” 순으로 흐르는 단순한 합성곱 신경망(CNN)입니다. | 7.5 CNN 구현하기 | 251 |
