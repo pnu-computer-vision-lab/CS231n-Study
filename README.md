@@ -1,12 +1,17 @@
-# 『밑바닥부터 시작하는 딥러닝』 (원서 : ゼロから作る Deep Learning)
+# 『밑바닥부터 시작하는 딥러닝』
 
-<img src="https://github.com/WegraLee/deep-learning-from-scratch/blob/master/1_vs_2.png" width="500" align="right">
 <img src="https://github.com/WegraLee/deep-learning-from-scratch/blob/master/cover_image.jpg" width="320">
 
 ---
 
-이 저장소는 『[밑바닥부터 시작하는 딥러닝](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)』(한빛미디어, 2017)의 지원 사이트입니다. ([『밑바닥부터 시작하는 딥러닝 ❷』의 깃허브 저장소는 이곳](https://github.com/WegraLee/deep-learning-from-scratch-2)입니다.)
+## 시리즈 소개 ([PDF 다운로드](https://github.com/WegraLee/deep-learning-from-scratch-3/blob/master/%EB%B0%91%EB%B0%94%EB%8B%A5123.pdf))
 
+<img src="https://github.com/WegraLee/deep-learning-from-scratch-3/blob/master/%EB%B0%91%EB%B0%94%EB%8B%A5123.png" width=1000>
+
+* [『밑바닥부터 시작하는 딥러닝 ❷』 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-2)
+* [『밑바닥부터 시작하는 딥러닝 ❸』 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-3)
+
+---
 
 :red_circle: **[공지]** 종종 실습용 손글씨 데이터셋 다운로드 사이트( http://yann.lecun.com/exdb/mnist/ )가 연결되지 않습니다.
 그래서 예제 수행에 필요한 데이터셋 파일을 /dataset/ 디렉터리에 올려뒀습니다.
@@ -20,11 +25,7 @@
 ---
 
 ## 새소식
-:white_check_mark: **2020.02.03** - 1.6.3절의 예시 이미지를 교체했습니다. 기존 이미지는 외설성 논란이 있어 왔고, 최근 이 이미지 사용을 중지하자는 움직임이 본격화되었습니다([Nautre Nanotech](https://www.nature.com/articles/s41565-018-0337-2), [Losing Lena](https://www.losinglena.com/)). 저와 출판사도 이 취지에 공감하여 이미지를 교체하기로 했습니다. 본 깃허브에는 이미 반영되었고, 책에는 12쇄부터 반영할 계획입니다.
-
-:white_check_mark: **2019.05.01** - 『밑바닥부터 시작하는 딥러닝 ❷』가 출간되었습니다. 차이점은 오른쪽 위 비교 그림을 참고하세요. 깃허브 주소는 아래와 같습니다.
-
-* [『밑바닥부터 시작하는 딥러닝 ❷』 깃허브](https://github.com/WegraLee/deep-learning-from-scratch-2)
+:white_check_mark: **2020.02.03** - 1.6.3절의 예시 이미지를 교체했습니다. 기존 이미지는 외설성 논란이 있어 왔고, 최근 이 이미지 사용을 중지하자는 움직임이 본격화되었습니다([Nautre Nanotech](https://www.nature.com/articles/s41565-018-0337-2), [Losing Lena](https://www.losinglena.com/)). 저와 출판사도 이 취지에 공감하여 이미지를 교체하기로 했습니다. 종이책에는 12쇄부터 반영됐습니다.
 
 :white_check_mark: **2017.04.03** - 책 본문의 수식과 그림 파일들을 모아 공유합니다. 스터디 자료 등을 만드실 때 필요하면 활용하세요.
 
