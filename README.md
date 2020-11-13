@@ -20,6 +20,11 @@
 * [『밑바닥부터 시작하는 딥러닝 ❷』 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-2)
 * [『밑바닥부터 시작하는 딥러닝 ❸』 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-3)
 
+## 선수지식
+
+다음은 역자가 추천하는 선수지식입니다.
+<img src="https://github.com/WegraLee/deep-learning-from-scratch-3/blob/master/%EB%B0%91%EB%B0%94%EB%8B%A5%20%EC%84%A0%EC%88%98%EC%A7%80%EC%8B%9D.png" width=1000>
+
 ---
 
 ## 새소식
