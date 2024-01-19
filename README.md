@@ -1,6 +1,6 @@
 # 『밑바닥부터 시작하는 딥러닝』
 
-<a href="http://www.yes24.com/Product/Goods/34970929"><img src="https://github.com/WegraLee/deep-learning-from-scratch/blob/master/cover_image.jpg" width="200" align=right></a>
+<a href="http://www.yes24.com/Product/Goods/34970929"><img src="https://github.com/WegraLee/deep-learning-from-scratch/blob/master/cover.jpeg" width="150" align=right></a>
 
 :red_circle: **[공지]** 종종 실습용 손글씨 데이터셋 다운로드 사이트( http://yann.lecun.com/exdb/mnist/ )가 연결되지 않습니다.
 그래서 예제 수행에 필요한 데이터셋 파일을 /dataset/ 디렉터리에 올려뒀습니다.
@@ -17,8 +17,16 @@
 
 <a href="https://github.com/WegraLee/deep-learning-from-scratch-3/blob/master/%EB%B0%91%EB%B0%94%EB%8B%A5%20%EC%8B%9C%EB%A6%AC%EC%A6%88%20%EC%86%8C%EA%B0%9C.pdf"><img src="https://github.com/WegraLee/deep-learning-from-scratch-3/blob/master/%EB%B0%91%EB%B0%94%EB%8B%A5%20%EC%8B%9C%EB%A6%AC%EC%A6%88%20%EC%86%8C%EA%B0%9C.png" width=1000></a>
 
-* [『밑바닥부터 시작하는 딥러닝 ❷』 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-2)
-* [『밑바닥부터 시작하는 딥러닝 ❸』 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-3)
+* [❷편의 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-2)
+* [❸편의 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-3)
+* [❹편의 깃허브 저장소](https://github.com/WegraLee/deep-learning-from-scratch-4)
+
+『밑바닥부터 시작하는 딥러닝』 시리즈는 현재 4편까지 출간되었고, 2024년 중으로 5편도 출간될 예정입니다. 5편까지의 핵심 내용과 관계는 대략 다음 그림처럼 정리할 수 있습니다.
+
+<img src="https://github.com/WegraLee/deep-learning-from-scratch-4/blob/master/series overview.png" width="600">
+
+4편에서는 강화 학습에 딥러닝을 결합한 심층 강화 학습을 설명하며, 당연하게도 3편에서 제작한 프레임워크를 활용합니다.
+5편에서는 요즘 가장 핫한 생성 모델을 다룰 계획입니다.
 
 ## 선수지식
 
@@ -81,18 +89,13 @@ $ python train_nueralnet.py
 ## 라이선스
 
 이 저장소의 소스 코드는 [MIT 라이선스](http://www.opensource.org/licenses/MIT)를 따릅니다.
-비상용뿐 아니라 상용으로도 자유롭게 이용하실 수 있습니다.
+상업적 목적으로도 자유롭게 이용하실 수 있습니다.
 
 ## 책의 오류
 
 이 책의 오탈자 등 오류 정보는 아래 페이지에서 확인하실 수 있습니다.
 
 http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198
-
-
-## 인공지능/딥러닝 관련 도서 로드맵
-[개앞맵시] 스카이넷도 딥러닝부터 : https://www.mindmeister.com/812276967/_
-<a href="https://www.mindmeister.com/812276967/_"><img src="https://camo.githubusercontent.com/042fd71e5b27402758eda1dbdac8ab78db7a8f19/68747470733a2f2f73636f6e74656e742e6669636e312d312e666e612e666263646e2e6e65742f762f74312e302d392f35373433373532385f323636393635323930363434313330385f353434323133353130373739383330323732305f6f2e706e673f5f6e635f6361743d313031265f6e635f68743d73636f6e74656e742e6669636e312d312e666e61266f683d3961643061623839313238373238613465383130643632663830336438373834266f653d3544373435393233" width="720"></a>
 
 ## 머신러닝/딥러닝 번역 용어표
 
