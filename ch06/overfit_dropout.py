@@ -10,6 +10,8 @@ from common.trainer import Trainer
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
+# test
+
 # 오버피팅을 재현하기 위해 학습 데이터 수를 줄임
 x_train = x_train[:300]
 t_train = t_train[:300]
