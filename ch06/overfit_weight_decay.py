@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dataset.mnist import load_mnist
 from common.multi_layer_net import MultiLayerNet
-from common.optimizer import SGD
+from common.optimizer import SGD, Adam, AdaGrad
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
@@ -16,53 +16,66 @@ x_train = x_train[:300]
 t_train = t_train[:300]
 
 # weight decay（가중치 감쇠） 설정 =======================
-#weight_decay_lambda = 0 # weight decay를 사용하지 않을 경우
-weight_decay_lambda = 0.1
+# weight_decay_lambda = 0 # weight decay를 사용하지 않을 경우
+weight_decay_lambda = 0.1 # Regularization term인 λR(W)의 λ값임
 # ====================================================
 
 network = MultiLayerNet(input_size=784, hidden_size_list=[100, 100, 100, 100, 100, 100], output_size=10,
-                        weight_decay_lambda=weight_decay_lambda)
-optimizer = SGD(lr=0.01) # 학습률이 0.01인 SGD로 매개변수 갱신
+                        weight_decay_lambda=weight_decay_lambda) # activation='relu', weight_init_std='relu'
+# optimizer = SGD(lr=0.01) # 학습률이 0.01인 SGD로 매개변수 갱신
+optimizer = Adam(lr=0.001) # 학습률이 0.01인 Adam
 
 max_epochs = 201
-train_size = x_train.shape[0]
+train_size = x_train.shape[0] # train_size: 300
 batch_size = 100
 
+# 1 epoch당 train loss, accuracy/ test accuracy 저장
 train_loss_list = []
 train_acc_list = []
 test_acc_list = []
 
-iter_per_epoch = max(train_size / batch_size, 1)
+iter_per_epoch = max(train_size / batch_size, 1) # 3iter당 1epoch
 epoch_cnt = 0
 
 for i in range(1000000000):
-    batch_mask = np.random.choice(train_size, batch_size)
+    batch_mask = np.random.choice(train_size, batch_size) # 300개(train_size)의 trainset 중 100개(batch_size)의 dataset이 들어있는 배치생성
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
 
     grads = network.gradient(x_batch, t_batch)
     optimizer.update(network.params, grads)
 
-    if i % iter_per_epoch == 0:
+    if i % iter_per_epoch == 0: # 1epoch당 accuracy 계산해서 저장
+        train_loss = network.loss(x_train, t_train)
         train_acc = network.accuracy(x_train, t_train)
         test_acc = network.accuracy(x_test, t_test)
+
+        train_loss_list.append(train_loss)
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
 
-        print("epoch:" + str(epoch_cnt) + ", train acc:" + str(train_acc) + ", test acc:" + str(test_acc))
+        print("epoch:" + str(epoch_cnt) + ", train loss : " + str(train_loss) + ", train acc:" + str(train_acc) + ", test acc:" + str(test_acc))
 
         epoch_cnt += 1
-        if epoch_cnt >= max_epochs:
+        if epoch_cnt >= max_epochs: # 0부터 200까지 epoch을 다 돌면 break
             break
 
 
 # 그래프 그리기==========
 markers = {'train': 'o', 'test': 's'}
 x = np.arange(max_epochs)
+plt.subplot(1, 2, 1)
 plt.plot(x, train_acc_list, marker='o', label='train', markevery=10)
 plt.plot(x, test_acc_list, marker='s', label='test', markevery=10)
 plt.xlabel("epochs")
 plt.ylabel("accuracy")
 plt.ylim(0, 1.0)
+plt.legend(loc='lower right')
+
+plt.subplot(1, 2, 2)
+plt.plot(x, train_loss_list, marker='o', label='train_loss', markevery=10)
+plt.xlabel("epochs")
+plt.ylabel("loss")
+plt.ylim(0, 30)
 plt.legend(loc='lower right')
 plt.show()

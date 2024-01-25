@@ -23,25 +23,26 @@ class MultiLayerNet:
     """
     def __init__(self, input_size, hidden_size_list, output_size,
                  activation='relu', weight_init_std='relu', weight_decay_lambda=0):
-        self.input_size = input_size
-        self.output_size = output_size
-        self.hidden_size_list = hidden_size_list
-        self.hidden_layer_num = len(hidden_size_list)
-        self.weight_decay_lambda = weight_decay_lambda
+        self.input_size = input_size # 784
+        self.output_size = output_size # 10
+        self.hidden_size_list = hidden_size_list # [100, 100, 100, 100, 100, 100]
+        self.hidden_layer_num = len(hidden_size_list) # 6개의 hidden layers
+        self.weight_decay_lambda = weight_decay_lambda #  0.1
         self.params = {}
 
         # 가중치 초기화
-        self.__init_weight(weight_init_std)
+        self.__init_weight(weight_init_std) # parameter가 relu이므로 He Initialization 사용
 
         # 계층 생성
         activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}
         self.layers = OrderedDict()
+        # layer를 쌓는 중
         for idx in range(1, self.hidden_layer_num+1):
             self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
                                                       self.params['b' + str(idx)])
-            self.layers['Activation_function' + str(idx)] = activation_layer[activation]()
+            self.layers['Activation_function' + str(idx)] = activation_layer[activation]() # Relu() : layers.py에 있음
 
-        idx = self.hidden_layer_num + 1
+        idx = self.hidden_layer_num + 1 # 7 : output
         self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
             self.params['b' + str(idx)])
 
@@ -56,15 +57,15 @@ class MultiLayerNet:
             'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
             'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
         """
-        all_size_list = [self.input_size] + self.hidden_size_list + [self.output_size]
+        all_size_list = [self.input_size] + self.hidden_size_list + [self.output_size] # [784, 100, 100, 100, 100, 100, 100, 10] : 각 layer별 node의 갯수(input - hidden1 - ... - output)
         for idx in range(1, len(all_size_list)):
             scale = weight_init_std
             if str(weight_init_std).lower() in ('relu', 'he'):
-                scale = np.sqrt(2.0 / all_size_list[idx - 1])  # ReLU를 사용할 때의 권장 초깃값
+                scale = np.sqrt(2.0 / all_size_list[idx - 1])  # ReLU를 사용할 때의 권장 초깃값 <== Use! (weight decay)
             elif str(weight_init_std).lower() in ('sigmoid', 'xavier'):
                 scale = np.sqrt(1.0 / all_size_list[idx - 1])  # sigmoid를 사용할 때의 권장 초깃값
-            self.params['W' + str(idx)] = scale * np.random.randn(all_size_list[idx-1], all_size_list[idx])
-            self.params['b' + str(idx)] = np.zeros(all_size_list[idx])
+            self.params['W' + str(idx)] = scale * np.random.randn(all_size_list[idx-1], all_size_list[idx]) # 이전 layer의 output이 input이 되므로 (idx-1)size by (idx)size의 weight생성
+            self.params['b' + str(idx)] = np.zeros(all_size_list[idx]) # bias term은 현재 layer의 node수와 같게
 
     def predict(self, x):
         for layer in self.layers.values():
@@ -84,14 +85,14 @@ class MultiLayerNet:
         -------
         손실 함수의 값
         """
-        y = self.predict(x)
+        y = self.predict(x) # x_batch
 
         weight_decay = 0
         for idx in range(1, self.hidden_layer_num + 2):
             W = self.params['W' + str(idx)]
-            weight_decay += 0.5 * self.weight_decay_lambda * np.sum(W ** 2)
+            weight_decay += 0.5 * self.weight_decay_lambda * np.sum(W ** 2) # regularization term : 1/2λ * W^2 (L2 Reg.)
 
-        return self.last_layer.forward(y, t) + weight_decay
+        return self.last_layer.forward(y, t) + weight_decay # Data Loss + Regularization
 
     def accuracy(self, x, t):
         y = self.predict(x)
@@ -139,21 +140,21 @@ class MultiLayerNet:
             grads['b1']、grads['b2']、... 각 층의 편향
         """
         # forward
-        self.loss(x, t)
+        self.loss(x, t) # softmax Loss + L2 Reg.
 
         # backward
         dout = 1
-        dout = self.last_layer.backward(dout)
+        dout = self.last_layer.backward(dout) # Loss에 대해서 back prop.
 
         layers = list(self.layers.values())
         layers.reverse()
-        for layer in layers:
-            dout = layer.backward(dout)
+        for layer in layers: # layer의 끝에서부터(reverse) backward 진행
+            dout = layer.backward(dout) # 이 과정 중에 dW, db가 생성됨, 각 layer마다 dW, db가 저장
 
         # 결과 저장
         grads = {}
         for idx in range(1, self.hidden_layer_num+2):
-            grads['W' + str(idx)] = self.layers['Affine' + str(idx)].dW + self.weight_decay_lambda * self.layers['Affine' + str(idx)].W
+            grads['W' + str(idx)] = self.layers['Affine' + str(idx)].dW + self.weight_decay_lambda * self.layers['Affine' + str(idx)].W # Q. Loss function(Data Loss + Reg)를 미분한건가?
             grads['b' + str(idx)] = self.layers['Affine' + str(idx)].db
 
         return grads
