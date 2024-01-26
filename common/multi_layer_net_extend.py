@@ -36,22 +36,35 @@ class MultiLayerNetExtend:
         self.use_batchnorm = use_batchnorm
         self.params = {}
 
-        # 가중치 초기화
+        # Perform the weight initialization process
         self.__init_weight(weight_init_std)
 
-        # 계층 생성
+        # Create the layers
         activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}
+
         self.layers = OrderedDict()
+
         for idx in range(1, self.hidden_layer_num+1):
+
+            # Class for forward, backward computation
             self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
                                                       self.params['b' + str(idx)])
+            
+            # Realization of the batch normalization
             if self.use_batchnorm:
+                # gamma refers to the std, so convert those into 'one'
                 self.params['gamma' + str(idx)] = np.ones(hidden_size_list[idx-1])
+
+                # beta refers to the mean, so convert those into 'zero'
                 self.params['beta' + str(idx)] = np.zeros(hidden_size_list[idx-1])
+
+                # Perform the batch normalization
+                # with gamma and beta which initialized into its own values before start training
                 self.layers['BatchNorm' + str(idx)] = BatchNormalization(self.params['gamma' + str(idx)], self.params['beta' + str(idx)])
                 
             self.layers['Activation_function' + str(idx)] = activation_layer[activation]()
             
+            # Perform the dropout process
             if self.use_dropout:
                 self.layers['Dropout' + str(idx)] = Dropout(dropout_ration)
 
@@ -61,22 +74,29 @@ class MultiLayerNetExtend:
         self.last_layer = SoftmaxWithLoss()
 
     def __init_weight(self, weight_init_std):
-        """가중치 초기화
+        """Perform the weight initialization
         
         Parameters
         ----------
-        weight_init_std : 가중치의 표준편차 지정（e.g. 0.01）
-            'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
-            'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
+        weight_init_std : the standard deviation of the weight（e.g. 0.01）
+            'relu / he' ~ 'He initialized value'
+            'sigmodi / relu' ~ 'Xavier initialized value'
         """
         all_size_list = [self.input_size] + self.hidden_size_list + [self.output_size]
         for idx in range(1, len(all_size_list)):
             scale = weight_init_std
+
             if str(weight_init_std).lower() in ('relu', 'he'):
-                scale = np.sqrt(2.0 / all_size_list[idx - 1])  # ReLUを使う場合に推奨される初期値
+                scale = np.sqrt(2.0 / all_size_list[idx - 1])  
+
+            # Xavier Initialization
             elif str(weight_init_std).lower() in ('sigmoid', 'xavier'):
-                scale = np.sqrt(1.0 / all_size_list[idx - 1])  # sigmoidを使う場合に推奨される初期値
+                scale = np.sqrt(1.0 / all_size_list[idx - 1])
+
+            # Weight
             self.params['W' + str(idx)] = scale * np.random.randn(all_size_list[idx-1], all_size_list[idx])
+
+            # Bias
             self.params['b' + str(idx)] = np.zeros(all_size_list[idx])
 
     def predict(self, x, train_flg=False):
@@ -106,11 +126,32 @@ class MultiLayerNetExtend:
         return self.last_layer.forward(y, t) + weight_decay
 
     def accuracy(self, X, T):
+        """
+        Compute the accuracy
+        
+        Params:
+            X: train image
+            T: true labels for the input data
+
+        Return:
+            accuracy: return the accuracy of current network
+        """
+
+        # Get the predictions for the input data
         Y = self.predict(X, train_flg=False)
+
+        # Convert the predictions to a single label per sample
+        # By taking the index of the highest value along axis 1
+        # (ie. the class with the highest probability)
         Y = np.argmax(Y, axis=1)
+
+        # Check whether true label's dimension is greater than 1
+        # If so, convert 'T' into same format as 'Y' by using 'argmax'
         if T.ndim != 1 : T = np.argmax(T, axis=1)
 
+        # Compute the accuracy
         accuracy = np.sum(Y == T) / float(X.shape[0])
+        
         return accuracy
 
     def numerical_gradient(self, X, T):
